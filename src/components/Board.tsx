@@ -3,7 +3,9 @@ import { IssuesContext } from '../context/IssuesContext';
 import { UserContext } from '../context/UserContext';
 import { Issue } from '../types';
 import { Filter } from './Filter';
+import { IssueModal } from './IssueModal';
 import { UndoContext } from '../context/UndoContext';
+import { useRecentlyAccessed } from '../context/RecentlyAccessedContext';
 import { UndoToast } from './UndoToast';
 import './Board.css';
 import { DndContext, closestCenter } from '@dnd-kit/core';
@@ -57,6 +59,8 @@ export const Board: React.FC = () => {
   const { undoData, triggerUndo, performUndo } = useContext(UndoContext);
   const [filters, setFilters] = useState<{ assignee: string; severity: number | null; search: string }>({ assignee: '', severity: null, search: '' });
   const [localIssues, setLocalIssues] = useState<Issue[] | null>(null);
+  const { addRecent } = useRecentlyAccessed();
+  const [modalIssue, setModalIssue] = useState<Issue | null>(null);
 
 
   // Use localIssues if present (for undo), else issues from context
@@ -102,6 +106,7 @@ export const Board: React.FC = () => {
 
   // Handle move with undo support
   const handleMove = (id: string, newStatus: Status) => {
+    addRecent(id); // Track as recently accessed when moved
     // Save previous state for undo
     const prevIssues = issuesToUse.map(issue => ({ ...issue }));
     setLocalIssues(
@@ -158,8 +163,17 @@ export const Board: React.FC = () => {
                     issue={issue}
                     className={`issue-card${status === 'In Progress' ? ' in-progress' : status === 'Done' ? ' done' : ''}`.trim()}
                   >
-                    <div>
-                      <div className="issue-title">{issue.title}</div>
+                    <div
+                      onClick={e => {
+                        // Only open modal if not clicking the move button
+                        if ((e.target as HTMLElement).closest('.move-btn')) return;
+                        setModalIssue(issue);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className="issue-title">
+                        <span style={{ textDecoration: 'underline' }}>{issue.title}</span>
+                      </div>
                       <div className="issue-desc">{issue.description}</div>
                       <div className="issue-meta">
                         <b>Assignee:</b> {issue.assignee} &nbsp;|&nbsp; <b>Severity:</b> {issue.severity}
@@ -172,7 +186,10 @@ export const Board: React.FC = () => {
                       </div>
                       {currentUser.role === 'admin' && status !== 'Done' && (
                         <button
-                          onClick={() => handleMove(issue.id, getNextStatus(status))}
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleMove(issue.id, getNextStatus(status));
+                          }}
                           className="move-btn"
                         >
                           Move to {getNextStatus(status)}
@@ -186,6 +203,18 @@ export const Board: React.FC = () => {
           ))}
         </div>
       </DndContext>
+      {modalIssue && (
+        <IssueModal
+          issue={modalIssue}
+          onClose={() => setModalIssue(null)}
+          canResolve={currentUser.role === 'admin'}
+          resolving={false}
+          onResolve={() => {
+            handleMove(modalIssue.id, 'Done');
+            setModalIssue({ ...modalIssue, status: 'Done' });
+          }}
+        />
+      )}
     </div>
   );
 };

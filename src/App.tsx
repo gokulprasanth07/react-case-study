@@ -8,6 +8,7 @@ import { IssueDetailPage } from './pages/IssueDetailPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { Navigation } from './components/Navigation';
 import { UndoProvider } from './context/UndoContext';
+import { RecentlyAccessedProvider } from './context/RecentlyAccessedContext';
 
 
 export const App = () => {
@@ -15,15 +16,17 @@ export const App = () => {
     <UserProvider>
       <UndoProvider>
         <IssuesProvider>
-          <Router>
-            <Navigation />
-            <Routes>
-              <Route path="/board" element={<BoardPage />} />
-              <Route path="/issue/:id" element={<IssueDetailPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="*" element={<Navigate to="/board" />} />
-            </Routes>
-          </Router>
+          <RecentlyAccessedProvider>
+            <Router>
+              <Navigation />
+              <Routes>
+                <Route path="/board" element={<BoardPage />} />
+                <Route path="/issue/:id" element={<IssueDetailPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="*" element={<Navigate to="/board" />} />
+              </Routes>
+            </Router>
+          </RecentlyAccessedProvider>
         </IssuesProvider>
       </UndoProvider>
     </UserProvider>
