@@ -1,3 +1,60 @@
+/* Dark mode overrides */
+.dark .board-container {
+    background: #181a1b !important;
+}
+
+.dark .board-column {
+    background: #23272a !important;
+    box-shadow: 0 2px 8px #0006 !important;
+}
+
+.dark .board-column h2 {
+    color: #e0e0e0 !important;
+}
+
+.dark .issue-card {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+    border-left-color: #fbbf24 !important;
+    box-shadow: 0 1px 8px #000a !important;
+}
+
+.dark .issue-card.in-progress {
+    border-left-color: #3b82f6 !important;
+}
+
+.dark .issue-card.done {
+    border-left-color: #10b981 !important;
+}
+
+.dark .issue-title {
+    color: #fff !important;
+}
+
+.dark .issue-desc {
+    color: #bbb !important;
+}
+
+.dark .issue-meta {
+    color: #aaa !important;
+}
+
+.dark .move-btn {
+    background: #6366f1 !important;
+    color: #fff !important;
+}
+
+.dark .undo-toast {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 2px 12px #000a !important;
+}
+
+.dark .undo-toast button {
+    background: #6366f1 !important;
+    color: #fff !important;
+}
+
 .drag-handle {
     display: none;
     position: absolute;

@@ -1,0 +1,26 @@
+body.dark {
+    background: #181a1b !important;
+    color: #e0e0e0 !important;
+}
+
+.dark .board-container,
+.dark .board-column,
+.dark .issue-card,
+.dark .filter-bar,
+.dark nav,
+.dark aside {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+}
+
+.dark input,
+.dark select,
+.dark button {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+.dark .issue-card {
+    box-shadow: 0 2px 8px #0006 !important;
+}
