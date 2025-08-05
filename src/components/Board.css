@@ -1,0 +1,149 @@
+.drag-handle {
+    display: none;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 1.2rem;
+    color: #6366f1;
+    user-select: none;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.issue-card.draggable:hover .drag-handle {
+    display: block;
+}
+
+.board-container {
+    padding: 1rem;
+    background: #f6f7fb;
+    min-height: 100vh;
+}
+
+.board-columns {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.board-column {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    padding: 1rem;
+    min-width: 280px;
+    min-height: 400px;
+}
+
+.board-column h2 {
+    text-align: center;
+    color: #4a4a4a;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.no-issues {
+    color: #bbb;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.issue-card {
+    background: #f9fafc;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    margin-bottom: 1.2rem;
+    padding: 1rem;
+    border-left: 5px solid #fbbf24;
+    transition: box-shadow 0.2s;
+    position: relative;
+}
+
+.issue-card.draggable:hover {
+    cursor: pointer;
+}
+
+.issue-card.in-progress {
+    border-left-color: #3b82f6;
+}
+
+.issue-card.done {
+    border-left-color: #10b981;
+}
+
+.issue-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.issue-desc {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.issue-meta {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.move-btn {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.undo-toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #222;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
+    padding: 1rem 2rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: fadeIn 0.2s;
+}
+
+.undo-toast button {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

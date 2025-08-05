@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "title": "Fix login bug",
+    "status": "Backlog",
+    "priority": "high",
+    "severity": 3,
+    "createdAt": "2025-07-09T10:00:00Z",
+    "assignee": "alice",
+    "tags": [
+      "auth",
+      "bug"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Improve dashboard loading",
+    "status": "In Progress",
+    "priority": "medium",
+    "severity": 2,
+    "createdAt": "2025-07-08T12:00:00Z",
+    "assignee": "bob",
+    "tags": [
+      "performance"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Add dark mode",
+    "status": "Done",
+    "priority": "low",
+    "severity": 1,
+    "createdAt": "2025-07-07T09:30:00Z",
+    "assignee": "carol",
+    "tags": [
+      "ui"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Update user profile page",
+    "status": "Backlog",
+    "priority": "medium",
+    "severity": 2,
+    "createdAt": "2025-07-06T14:45:00Z",
+    "assignee": "dave",
+    "tags": [
+      "ui",
+      "profile"
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Fix API response time",
+    "status": "In Progress",
+    "priority": "high",
+    "severity": 3,
+    "createdAt": "2025-07-05T11:15:00Z",
+    "assignee": "eve",
+    "tags": [
+      "api",
+      "performance"
+    ]
+  }
+]
