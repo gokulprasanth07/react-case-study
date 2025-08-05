@@ -1,5 +1,7 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { IssuesContext } from '../context/IssuesContext';
+import { useIssuePolling } from '../hooks/useIssuePolling';
+import { LastSync } from './LastSync';
 import { UserContext } from '../context/UserContext';
 import { Issue } from '../types';
 import { Filter } from './Filter';
@@ -61,6 +63,15 @@ export const Board: React.FC = () => {
   const [localIssues, setLocalIssues] = useState<Issue[] | null>(null);
   const { addRecent } = useRecentlyAccessed();
   const [modalIssue, setModalIssue] = useState<Issue | null>(null);
+
+  // Polling logic
+  const fetchIssues = () => {
+    // This will trigger the IssuesProvider's useEffect, which is a mock for now
+    // In a real app, this would call an API or refetch
+    // For demo, we can just set a dummy state to force re-render
+    setLocalIssues(null); // Reset to context issues
+  };
+  const { lastSync } = useIssuePolling(fetchIssues, 10000);
 
 
   // Use localIssues if present (for undo), else issues from context
@@ -144,6 +155,7 @@ export const Board: React.FC = () => {
   return (
     <div className="board-container">
       <UndoToast onUndo={handleUndo} />
+      <LastSync lastSync={lastSync} />
       <Filter onFilter={setFilters} />
       <DndContext
         collisionDetection={closestCenter}
