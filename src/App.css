@@ -1,3 +1,19 @@
+.dark .filter-bar {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+}
+
+.dark .filter-bar label {
+    color: #e0e0e0 !important;
+}
+
+.dark .filter-bar select,
+.dark .filter-bar input {
+    background: #181a1b !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
 body.dark {
     background: #181a1b !important;
     color: #e0e0e0 !important;
