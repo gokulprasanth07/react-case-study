@@ -3,7 +3,7 @@ import { IssuesProvider } from './context/IssuesContext';
 import { UserProvider } from './context/UserContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { BoardPage } from './pages/BoardPage';
 import { IssueDetailPage } from './pages/IssueDetailPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -16,20 +16,18 @@ import { RecentlyAccessedProvider } from './context/RecentlyAccessedContext';
 const AppContent = () => {
   const { darkMode } = useTheme();
   return (
-    <Router>
-      <div className={darkMode ? 'dark' : ''} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Navigation />
-          <DarkModeToggle />
-        </div>
-        <Routes>
-          <Route path="/board" element={<BoardPage />} />
-          <Route path="/issue/:id" element={<IssueDetailPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<Navigate to="/board" />} />
-        </Routes>
+    <div className={darkMode ? 'dark' : ''} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Navigation />
+        <DarkModeToggle />
       </div>
-    </Router>
+      <Routes>
+        <Route path="/board" element={<BoardPage />} />
+        <Route path="/issue/:id" element={<IssueDetailPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="*" element={<Navigate to="/board" />} />
+      </Routes>
+    </div>
   );
 };
 

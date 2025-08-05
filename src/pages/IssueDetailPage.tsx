@@ -34,7 +34,12 @@ export const IssueDetailPage = () => {
     return (
         <div style={{ maxWidth: 600, margin: '2rem auto', background: '#fff', borderRadius: 8, boxShadow: '0 2px 8px #0001', padding: '2rem' }}>
             <div style={{ marginBottom: 16 }}>
-                <Link to="/board" style={{ textDecoration: 'none', color: '#1976d2', fontWeight: 500 }}>&larr; Back to Board</Link>
+                <button
+                    onClick={() => navigate('/board')}
+                    style={{ textDecoration: 'none', color: '#1976d2', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', fontSize: 16 }}
+                >
+                    &larr; Back to Board
+                </button>
             </div>
             <h2 style={{ marginTop: 0 }}>{issue.title}</h2>
             <div style={{ color: '#666', marginBottom: 8 }}>ID: {issue.id}</div>

@@ -27,12 +27,12 @@ export const RecentlyAccessedProvider = ({ children }: { children: ReactNode }) 
     localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds));
   }, [recentIds]);
 
-  const addRecent = (id: string) => {
+  const addRecent = React.useCallback((id: string) => {
     setRecentIds(prev => {
       const filtered = prev.filter(x => x !== id);
       return [id, ...filtered].slice(0, 5);
     });
-  };
+  }, []);
 
   return (
     <RecentlyAccessedContext.Provider value={{ recentIds, addRecent }}>

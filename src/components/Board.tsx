@@ -1,4 +1,5 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IssuesContext } from '../context/IssuesContext';
 import { useIssuePolling } from '../hooks/useIssuePolling';
 import { LastSync } from './LastSync';
@@ -23,7 +24,7 @@ function getPriorityScore(issue: Issue): number {
   return issue.severity * 10 + (daysSinceCreated * -1) + issue.userDefinedRank;
 }
 
-const DraggableIssueCard = ({ issue, children, className }: { issue: any; children: React.ReactNode; className?: string }) => {
+const DraggableIssueCard = ({ issue, children, className, onCardClick }: { issue: any; children: React.ReactNode; className?: string; onCardClick?: (e: React.MouseEvent) => void }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: issue.id,
   });
@@ -34,6 +35,7 @@ const DraggableIssueCard = ({ issue, children, className }: { issue: any; childr
       {...listeners}
       className={className ? `${className} draggable` : 'draggable'}
       style={{ opacity: isDragging ? 0.5 : 1, position: 'relative' }}
+      onClick={onCardClick}
     >
       <span className="drag-handle">::</span>
       {children}
@@ -62,15 +64,16 @@ export const Board: React.FC = () => {
   const [filters, setFilters] = useState<{ assignee: string; severity: number | null; search: string }>({ assignee: '', severity: null, search: '' });
   const [localIssues, setLocalIssues] = useState<Issue[] | null>(null);
   const { addRecent } = useRecentlyAccessed();
-  const [modalIssue, setModalIssue] = useState<Issue | null>(null);
+  // const [modalIssue, setModalIssue] = useState<Issue | null>(null);
+  const navigate = useNavigate();
 
   // Polling logic
-  const fetchIssues = () => {
+  const fetchIssues = useCallback(() => {
     // This will trigger the IssuesProvider's useEffect, which is a mock for now
     // In a real app, this would call an API or refetch
     // For demo, we can just set a dummy state to force re-render
-    setLocalIssues(null); // Reset to context issues
-  };
+    setLocalIssues(prev => (prev !== null ? null : prev)); // Only update if not already null
+  }, []);
   const { lastSync } = useIssuePolling(fetchIssues, 10000);
 
 
@@ -174,15 +177,13 @@ export const Board: React.FC = () => {
                     key={issue.id}
                     issue={issue}
                     className={`issue-card${status === 'In Progress' ? ' in-progress' : status === 'Done' ? ' done' : ''}`.trim()}
+                    onCardClick={e => {
+                      // Only navigate if not clicking the move button or drag handle
+                      if ((e.target as HTMLElement).closest('.move-btn') || (e.target as HTMLElement).classList.contains('drag-handle')) return;
+                      navigate(`/issue/${issue.id}`);
+                    }}
                   >
-                    <div
-                      onClick={e => {
-                        // Only open modal if not clicking the move button
-                        if ((e.target as HTMLElement).closest('.move-btn')) return;
-                        setModalIssue(issue);
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <div style={{ cursor: 'pointer' }}>
                       <div className="issue-title">
                         <span style={{ textDecoration: 'underline' }}>{issue.title}</span>
                       </div>
@@ -215,18 +216,7 @@ export const Board: React.FC = () => {
           ))}
         </div>
       </DndContext>
-      {modalIssue && (
-        <IssueModal
-          issue={modalIssue}
-          onClose={() => setModalIssue(null)}
-          canResolve={currentUser.role === 'admin'}
-          resolving={false}
-          onResolve={() => {
-            handleMove(modalIssue.id, 'Done');
-            setModalIssue({ ...modalIssue, status: 'Done' });
-          }}
-        />
-      )}
+      {/* Modal logic removed: Issue details now handled by route /issue/:id */}
     </div>
   );
 };
