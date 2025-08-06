@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { useRecentlyAccessed } from '../context/RecentlyAccessedContext';
 import { IssuesContext } from '../context/IssuesContext';
 import { useNavigate } from 'react-router-dom';
+import './RecentlyAccessedSidebar.css';
 
 export const RecentlyAccessedSidebar: React.FC = () => {
   const { recentIds } = useRecentlyAccessed();
@@ -13,24 +14,24 @@ export const RecentlyAccessedSidebar: React.FC = () => {
 
   const navigate = useNavigate();
   return (
-    <aside style={{ width: 260, background: '#f4f6fa', padding: '1rem', borderRight: '1px solid #e0e0e0', minHeight: '100vh' }}>
-      <h3 style={{ marginTop: 0 }}>Recently Accessed</h3>
+    <aside className="recently-accessed-sidebar">
+      <h3 className="recently-accessed-title">Recently Accessed</h3>
       {recentIssues.length === 0 ? (
-        <div style={{ color: '#888' }}>No recent issues</div>
+        <div className="recently-accessed-empty">No recent issues</div>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
+        <ul className="recently-accessed-list">
           {recentIssues.map(issue => (
-            <li key={issue!.id} style={{ marginBottom: 16 }}>
+            <li key={issue!.id} className="recently-accessed-item">
               <div
-                style={{ textDecoration: 'none', color: '#333', cursor: 'pointer' }}
+                className="recently-accessed-link"
                 onClick={() => navigate(`/issue/${issue!.id}`)}
                 tabIndex={0}
                 onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate(`/issue/${issue!.id}`); }}
                 role="button"
                 aria-label={`Go to issue ${issue!.title}`}
               >
-                <div style={{ fontWeight: 500 }}>{issue!.title}</div>
-                <div style={{ fontSize: 12, color: '#666' }}>{issue!.status} &middot; Severity {issue!.severity}</div>
+                <div className="recently-accessed-issue-title">{issue!.title}</div>
+                <div className="recently-accessed-issue-meta">{issue!.status} &middot; Severity {issue!.severity}</div>
               </div>
             </li>
           ))}

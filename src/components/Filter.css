@@ -1,0 +1,45 @@
+.filter-bar {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    background: var(--filter-bg, #f4f6fa);
+    box-shadow: 0 1px 4px #0001;
+}
+
+.filter-bar input[type="text"] {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    border: 1.5px solid #bbb;
+    min-width: 200px;
+    font-size: 15px;
+    background: var(--input-bg, #fff);
+    color: inherit;
+}
+
+.filter-bar .filter-group {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.filter-bar label {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--filter-label, #222);
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-bar select {
+    margin-left: 6px;
+    padding: 0.35rem 1.1rem;
+    border-radius: 8px;
+    border: 1.5px solid #bbb;
+    min-width: 90px;
+    font-size: 15px;
+    background: var(--input-bg, #fff);
+    color: inherit;
+}
